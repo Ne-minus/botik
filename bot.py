@@ -2,7 +2,8 @@
 import os
 import telebot
 
-bot = telebot.TeleBot('1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM')
+TOKEN = input("введите тоен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
+bot = telebot.TeleBot(TOKEN)
 name = ''
 surname = ''
 age = 0
