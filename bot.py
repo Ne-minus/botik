@@ -33,7 +33,7 @@ def task(message):
     # bot.send_message(message.from_user.id,'Сколько тебе лет?')
     # bot.register_next_step_handler(message, get_age)
     filename = homework + '_' + task + '.txt'
-    path = os.path.join('botik/tests', homework)
+    path = os.path.join('/home/hseguest/botik', homework)
     path = os.path.join(path, filename)
     with open(path, encoding='utf-8') as f:
         bot.send_message(message.chat.id, text=f.read())
