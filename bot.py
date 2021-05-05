@@ -6,7 +6,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(content_types=['text', '/reg'])
 def start(message):
-    if '/task' in message.text:
+    if 'задач' in message.text:
         bot.send_message(message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
         bot.register_next_step_handler(message, get_homework)
 
