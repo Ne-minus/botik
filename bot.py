@@ -2,11 +2,11 @@
 import os
 import telebot
 
-TOKEN = input("введите тоен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
+TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
-name = ''
-surname = ''
-age = 0
+
+
+
 
 
 @bot.message_handler(content_types=['text', '/reg'])
@@ -28,19 +28,18 @@ def homeworks(message):  # получаем номер домашки
 
 def task(message):
     # global task
-    global filename, text1, task, path
     task = message.text
     # bot.send_message(message.from_user.id,'Сколько тебе лет?')
     # bot.register_next_step_handler(message, get_age)
-    filename = homework + '_' + task + '.txt'
-    path = os.path.join('/home/hseguest/botik', homework)
-    path = os.path.join(path, filename)
+    filename = str(homework) + '_' + str(task) + '.txt'
+    path = os.path.join('/home/hseguest/botik/tests', str(homework))
+    path = os.path.join(path, str(filename))
+    print(path)
     with open(path, encoding='utf-8') as f:
         bot.send_message(message.chat.id, text=f.read())
 
 
-'''
-def get_age(message):
+'''def get_age(message):
     global age
     while age == 0: #проверяем что возраст изменился
         try:
