@@ -1,12 +1,11 @@
-import os
-import telebot
+import osimport telebot
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(content_types=['text', '/reg'])
 def start(message):
-    if 'задач' in message.text:
+    if '/task' in message.text:
         bot.send_message(message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
         bot.register_next_step_handler(message, get_homework)
 
