@@ -36,7 +36,6 @@ def get_homework(message):  # получаем номер домашки
     bot.send_message(message.chat.id, 'Отправь мне номер задачи, и все будет сделано))')
     bot.register_next_step_handler(message, get_task)
 
-
 def get_task(message):
     task = message.text
     filename = str(homework) + '_' + str(task) + '.txt'
@@ -49,5 +48,14 @@ def get_task(message):
         bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
         bot.register_next_step_handler(message, get_homework)
 
-#ssssssss
+
+@bot.message_handler(func=lambda message: message.forward_from == 'SEMiCODE')
+def update_hw(message):  # if message.forward_from == 'SEMiCODE':
+    for entity in message.entities:
+        if entity.type == messageentity.url:
+            rep_link = message.parse_entity(entity)
+            bot.send_message(message.chat.id, rep_link)  # check1
+            break
+
+
 bot.polling()
