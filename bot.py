@@ -49,5 +49,5 @@ def get_task(message):
         bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
         bot.register_next_step_handler(message, get_homework)
 
-
+#ssssssss
 bot.polling()
