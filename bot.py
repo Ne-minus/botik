@@ -1,14 +1,33 @@
 import os
 import telebot
+from telebot import types
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
 
+
 @bot.message_handler(content_types=['text', '/reg'])
-def start(message):
+def asker(message):
     if 'задач' in message.text:
-        bot.send_message(message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
-        bot.register_next_step_handler(message, get_homework)
+        question = "Вам нужна помощь с поиском задачи?"
+        keyboard = types.InlineKeyboardMarkup() #наша клавиатура
+        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
+        keyboard.add(key_yes) #добавляем кнопку в клавиатуру
+        bot.send_message(message.chat.id, text=question, reply_markup=keyboard)
+        #bot.register_next_step_handler(message, callback_worker)
+
+
+@bot.callback_query_handler(func=lambda call: True)        
+def callback_worker(call):
+    if call.data == "yes":
+        bot.send_message(call.message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
+        bot.register_next_step_handler(call.message, get_homework)
+    
+            
+#def start(message):
+ #   print(1337)
+ #   bot.send_message(message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
+#  bot.register_next_step_handler(call.message, get_homework)
 
 
 def get_homework(message):  # получаем номер домашки
@@ -32,4 +51,3 @@ def get_task(message):
 
 
 bot.polling()
-
