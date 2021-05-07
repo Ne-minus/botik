@@ -7,10 +7,14 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
 def update_hw(message):
-    bot.send_message(message.chat.id, 'памагите')
+     for entity in message.entities:
+        if entity.type == messageentity.url:
+            rep_link = message.parse_entity(entity)
+            bot.send_message(message.chat.id, rep_link)  # check1
+            break
 
 
-@bot.message_handler(content_types=['text', '/reg'])
+@bot.message_handler(func=lambda message: message.forward_from.username != 'semicodebot', content_types=['text', '/reg'])
 def asker(message):
     if 'задач' in message.text:
         question = "Вам нужна помощь с поиском задачи?"
