@@ -5,7 +5,7 @@ from telebot import types
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
 
-@bot.message_handler(func=lambda message: message.forward_from == 'SEMiCODE')
+@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
 def update_hw(message):
     bot.send_message(message.chat.id, 'памагите')
 
