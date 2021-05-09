@@ -6,12 +6,22 @@ TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmH
 bot = telebot.TeleBot(TOKEN)
 
 
-@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
-def update_hw(message):
+def forward_check(message):
     try:
-        bot.send_message(message.chat.id, "семикод?")
+        if message.forward_from.username == 'semicodebot':
+            return True
     except AttributeError:
-        pass
+        return False
+
+
+@bot.message_handler(func=forward_check(message))  # func=lambda message: message.forward_from.username == 'semicodebot')
+def update_hw(message):
+    if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
+        for entity in message.entities:
+            if entity.type == messageentity.url:
+                rep_link = message.parse_entity(entity)
+                bot.send_message(message.chat.id, rep_link)
+                break
 
 
 @bot.message_handler(content_types=['text', '/reg'])
