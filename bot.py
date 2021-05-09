@@ -20,7 +20,7 @@ def update_hw(message):
             pattern_hw = r'(?<=<title>[HhWw- ]+)[0-9]+(?=</title>)'
             for line in r:
                 decoded = line.decode('utf-8')
-                if '<a href="/Pandaklez' in line and '/raw/' in decoded:
+                if '<a href="/Pandaklez' in decoded and '/raw/' in decoded:
                     task_links.extend(re.findall(pattern_task_link, decoded))
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
