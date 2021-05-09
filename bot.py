@@ -28,7 +28,7 @@ def update_hw(message):
                     hw = re.findall(pattern_hw, decoded)[0]
         for i in range(len(task_links)):
             with urllib.request.urlopen(task_links[i]) as t:
-                task = t.read
+                task = t.read()
                 for line in task:
                     bot.send_message(message.chat.id, line)
             path = os.path.join('/home/hseguest/botik/tests', hw)
