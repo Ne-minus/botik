@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
 def update_hw(message):
-    bot.send_message(call.message.chat.id, "семикод?")
+    bot.send_message(message.chat.id, "семикод?")
 
 
 @bot.message_handler(content_types=['text', '/reg'])
