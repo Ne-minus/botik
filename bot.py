@@ -20,10 +20,10 @@ def update_hw(message):
             pattern_hw = r'(?<=<title>[HhWw- ]+)[0-9]+(?=</title>)'
             for line in r:
                 decoded = line.decode('utf-8')
-                if '<a href="/Pandaklez' in line and '/raw/' in line:
-                    task_links.extend(re.findall(pattern_task_link, line))
+                if '<a href="/Pandaklez' in line and '/raw/' in decoded:
+                    task_links.extend(re.findall(pattern_task_link, decoded))
                 elif '<title>' in decoded:
-                    hw = re.findall(pattern_hw, line)[0]
+                    hw = re.findall(pattern_hw, decoded)[0]
                     bot.send_message(message.chat.id, hw)
 
 
