@@ -29,7 +29,8 @@ def update_hw(message):
         for i in range(len(task_links)):
             with urllib.request.urlopen(task_links[i]) as t:
                 task = t.read
-                bot.send_message(message.chat.id, task)
+                for line in t:
+                    bot.send_message(message.chat.id, line)
             path = os.path.join('/home/hseguest/botik/tests', hw)
             filename = str(hw) + '_' + str(i+1) + '.txt'
             path = os.path.join(path, str(filename))
