@@ -9,7 +9,11 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(func=lambda message: message.forward_from is not None)
 def update_hw(message):
     if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
-        bot.send_message(message.chat.id, 'семикод?')
+        for entity in message.entities:
+            if entity.type == MessageEntity.URL:
+                rep_link = message.parse_entity(entity)
+                bot.send_message(message.chat.id, rep_link)
+                break
 
 
 @bot.message_handler(content_types=['text', '/reg'])
