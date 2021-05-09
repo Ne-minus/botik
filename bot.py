@@ -6,11 +6,6 @@ TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmH
 bot = telebot.TeleBot(TOKEN)
 
 
-@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
-def update_hw(message):
-    bot.send_message(message.chat.id, 'памагите')
-
-
 @bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
