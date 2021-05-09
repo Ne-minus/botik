@@ -22,7 +22,7 @@ def update_hw(message):
                 decoded = line.decode('utf-8')
                 if '<a href="/Pandaklez' in line and '/raw/' in line:
                     task_links.extend(re.findall(pattern_task_link, line))
-                elif if '<title>' in decoded:
+                elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, line)[0]
                     bot.send_message(message.chat.id, hw)
 
