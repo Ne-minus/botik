@@ -29,7 +29,6 @@ def update_hw(message):
         for i in range(len(task_links)):
             with urllib.request.urlopen(task_links[i]) as t:
                 task = t.read()
-                bot.send_message(message.chat.id, task)
             path = os.path.join('/home/hseguest/botik/tests', hw)
             filename = str(hw) + '_' + str(i+1) + '.txt'
             path = os.path.join(path, str(filename))
@@ -38,6 +37,8 @@ def update_hw(message):
                     if f.readline() is not None:
                         bot.send_message(message.chat.id, "задача уже есть")
             except FileNotFoundError:
+                with open(path, 'a', encoding='utf-8') as new:
+                    new.write(task)
                 bot.send_message(message.chat.id, "Задачи обновлены")
 
 
