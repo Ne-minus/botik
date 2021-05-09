@@ -6,7 +6,7 @@ TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmH
 bot = telebot.TeleBot(TOKEN)
 
 
-@bot.message_handler(func=lambda message: message.forward_from.username is not None)
+@bot.message_handler(func=lambda message: message.forward_from is not None)
 def update_hw(message):
     if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
         bot.send_message(message.chat.id, 'семикод?')
