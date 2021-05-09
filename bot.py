@@ -17,8 +17,9 @@ def update_hw(message):
                 break
         with urllib.request.urlopen(rep_link) as r:
             for line in r:
-                if '<title>' in line:
-                    bot.send_message(message.chat.id, line)
+                decoded = line.decode('utf-8')
+                if '<title>' in decoded:
+                    bot.send_message(message.chat.id, decoded)
                     break
 
 
