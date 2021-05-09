@@ -22,11 +22,10 @@ def update_hw(message):
             for line in r:
                 decoded = line.decode('utf-8')
                 if '<a href="/Pandaklez' in decoded and '/raw/' in decoded:
-                    task_links.extend(re.findall(pattern_task_link, decoded))
+                    for n in re.findall(pattern_task_link, decoded):
+                        task_links.append('https://gist.githubusercontent.com/'+n)
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
-        for el in task_links:
-            el = 'https://gist.githubusercontent.com/' + el
         bot.send_message(message.chat.id, task_links[1])
 
 
