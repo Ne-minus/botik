@@ -7,12 +7,6 @@ bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(content_types=['text', '/reg'])
-def update_hw(message):
-    if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
-        bot.send_message(message.chat.id, "семикод?")
-
-
-@bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
         question = "Вам нужна помощь с поиском задачи?"
@@ -53,6 +47,12 @@ def get_task(message):
     except FileNotFoundError:
         bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
         bot.register_next_step_handler(message, get_homework)
+
+
+@bot.message_handler(content_types=['text', '/reg'])
+def update_hw(message):
+    if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
+        bot.send_message(message.chat.id, "семикод?")
 
 
 bot.polling()
