@@ -6,6 +6,14 @@ TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmH
 bot = telebot.TeleBot(TOKEN)
 
 
+@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
+def update_hw(message):
+    try:
+        bot.send_message(message.chat.id, "семикод?")
+    except AttributeError:
+        pass
+
+
 @bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
@@ -47,14 +55,6 @@ def get_task(message):
     except FileNotFoundError:
         bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
         bot.register_next_step_handler(message, get_homework)
-
-
-@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
-def update_hw(message):
-    try:
-        bot.send_message(message.chat.id, "семикод?")
-    except AttributeError:
-        pass
 
 
 bot.polling()
