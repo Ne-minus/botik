@@ -25,9 +25,7 @@ def update_hw(message):
                     task_links.extend(re.findall(pattern_task_link, decoded))
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
-                    bot.send_message(message.chat.id, hw)
-        for el in task_links:
-            bot.send_message(message.chat.id, el)
+        bot.send_message(message.chat.id, task_links[1])
 
 
 @bot.message_handler(content_types=['text', '/reg'])
