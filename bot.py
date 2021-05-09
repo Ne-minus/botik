@@ -10,7 +10,7 @@ bot = telebot.TeleBot(TOKEN)
 def update_hw(message):
     if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
         for entity in message.entities:
-            if entity.type == MessageEntity.URL:
+            if entity.type == url:
                 rep_link = message.parse_entity(entity)
                 bot.send_message(message.chat.id, rep_link)
                 break
