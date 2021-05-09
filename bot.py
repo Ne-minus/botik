@@ -5,18 +5,20 @@ from telebot import types
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
 
-@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
-def update_hw(message):
-     for entity in message.entities:
-        if entity.type == messageentity.url:
-            rep_link = message.parse_entity(entity)
-            bot.send_message(message.chat.id, rep_link)  # check1
-            break
+
+@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot', content_types=['text', '/reg'])
+def update_hw(message): # checks
+    if 'Все задачи по' in message.text:
+        for entity in message.entities:
+            if entity.type == messageentity.url:
+                rep_link = message.parse_entity(entity)
+                bot.send_message(message.chat.id, rep_link)
+                break
 
 
-@bot.message_handler(func=lambda message: message.forward_from.username != 'semicodebot', content_types=['text', '/reg'])
+@bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
-    if 'задач' in message.text:
+    if 'задач' in message.text and 'Все задачи по' not in message.text:
         question = "Вам нужна помощь с поиском задачи?"
         keyboard = types.InlineKeyboardMarkup() #наша клавиатура
         key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
