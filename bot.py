@@ -25,8 +25,21 @@ def update_hw(message):
                     for n in re.findall(pattern_task_link, decoded):
                         task_links.append('https://gist.githubusercontent.com'+n)
                 elif '<title>' in decoded:
-                    path = os.path.join('/home/hseguest/botik/tests', re.findall(pattern_hw, decoded)[0])
-                    bot.send_message(message.chat.id, path)
+                    hw = re.findall(pattern_hw, decoded)[0]
+        for i in range(len(task_links)):
+            with urllib.request.urlopen(task_links[i]) as t:
+                task = t.read
+            path = os.path.join('/home/hseguest/botik/tests', hw)
+            filename = str(hw) + '_' + str(i+1) + '.txt'
+            path = os.path.join(path, str(filename))
+            try:
+                with open(path, encoding='utf-8') as f:
+                    if f.readline() is not None:
+                        bot.send_message(message.chat.id, "задача уже есть")
+            except FileNotFoundError:
+                bot.send_message(message.chat.id, "Задачи обновлены")
+
+
 
 
 @bot.message_handler(content_types=['text', '/reg'])
