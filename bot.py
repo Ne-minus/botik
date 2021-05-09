@@ -17,12 +17,11 @@ def update_hw(message):
                 break
         with urllib.request.urlopen(rep_link) as r:
             task_links = []
-            pattern_task_link = r'(?<=<a href=" )/Pandaklez/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=" role="button")'  # регуляяяяяр_очка
+            pattern_task_link = r'(?<=<a href=")/Pandaklez/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляяяяяр_очка
             pattern_hw = r'(?<=<title>)[HWhw-]+[0-9]+'
             for line in r:
                 decoded = line.decode('utf-8')
                 if '<a href="/Pandaklez' in decoded and '/raw/' in decoded:
-                    bot.send_message(message.chat.id, decoded)
                     task_links.extend(re.findall(pattern_task_link, decoded))
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
