@@ -49,10 +49,12 @@ def get_task(message):
         bot.register_next_step_handler(message, get_homework)
 
 
-@bot.message_handler(content_types=['text', '/reg'])
+@bot.message_handler(func=lambda message: message.forward_from.username == 'semicodebot')
 def update_hw(message):
-    if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
+    try:
         bot.send_message(message.chat.id, "семикод?")
+    except AttributeError:
+        pass
 
 
 bot.polling()
