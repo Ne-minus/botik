@@ -26,7 +26,7 @@ def update_hw(message):
                         task_links.append('https://gist.githubusercontent.com'+n)
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
-        bot.send_message(message.chat.id, task_links[1])
+                    bot.send_message(message.chat.id, hw)
 
 
 @bot.message_handler(content_types=['text', '/reg'])
