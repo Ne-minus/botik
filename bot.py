@@ -3,6 +3,7 @@ import telebot
 from telebot import types
 import re
 import urllib.request
+import github
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
@@ -17,7 +18,7 @@ def update_hw(message):
                 break
         with urllib.request.urlopen(rep_link) as r:
             task_links = []
-            pattern_task_link = r'(?<=<a href=")/Pandaklez/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляяяяяр_очка
+            pattern_task_link = r'(?<=<a href=")/Pandaklez/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
             pattern_hw = r'(?<=[HWhw-])+[0-9]+'
             for line in r:
                 decoded = line.decode('utf-8')
@@ -37,11 +38,9 @@ def update_hw(message):
                     if f.readline() is not None:
                         bot.send_message(message.chat.id, "задача уже есть")
             except FileNotFoundError:
-                with open(path, 'a', encoding='utf-8') as new:
+                with open(path, 'w', encoding='utf-8') as new:
                     new.write(task)
                 bot.send_message(message.chat.id, "Задачи обновлены")
-
-
 
 
 @bot.message_handler(content_types=['text', '/reg'])
