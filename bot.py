@@ -3,7 +3,7 @@ import telebot
 from telebot import types
 import re
 import urllib.request
-import github
+from github import Github
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
