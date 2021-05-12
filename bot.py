@@ -3,10 +3,14 @@ import telebot
 from telebot import types
 import re
 import urllib.request
+import github
 from github import Github
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
+g = Github(input('введите логин гитхаб: '), input('введите пароль гитхаб: '))
+repo = g.get_user().get_repo("botik")
+
 
 
 @bot.message_handler(func=lambda message: message.forward_from is not None)
@@ -20,6 +24,7 @@ def update_hw(message):
             task_links = []
             pattern_task_link = r'(?<=<a href=")/Pandaklez/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
             pattern_hw = r'(?<=[HWhw-])+[0-9]+'
+            check = 0
             for line in r:
                 decoded = line.decode('utf-8')
                 if '<a href="/Pandaklez' in decoded and '/raw/' in decoded:
@@ -27,20 +32,24 @@ def update_hw(message):
                         task_links.append('https://gist.githubusercontent.com'+n)
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
-        for i in range(len(task_links)):
-            with urllib.request.urlopen(task_links[i]) as t:
-                task = t.read()
-            path = os.path.join('/home/hseguest/botik/tests', hw)
-            filename = str(hw) + '_' + str(i+1) + '.txt'
-            path = os.path.join(path, str(filename))
-            try:
-                with open(path, encoding='utf-8') as f:
-                    if f.readline() is not None:
-                        bot.send_message(message.chat.id, "задача уже есть")
-            except FileNotFoundError:
-                with open(path, 'w', encoding='utf-8') as new:
-                    new.write(task)
-                bot.send_message(message.chat.id, "Задачи обновлены")
+                    path = os.path.join('botik/tests', hw)
+                    try:
+                        contents = repo.get_contents(path)
+                        for c in contents:
+                            bot.send_message(message.chat.id, c)
+                        bot.send_message(message.chat.id, 'данное дз уже в базе')
+                        break
+                    except FileNotFoundError:
+                        check = 1
+        if check == 1:
+            for i in range(len(task_links)):
+                with urllib.request.urlopen(task_links[i]) as t:
+                    task = t.read()
+                path = os.path.join('botik/tests', hw)
+                filename = str(hw) + '_' + str(i+1) + '.txt'
+                path = os.path.join(path, str(filename))
+                repo.create_file(path, "upload", task)
+            bot.send_message(message.chat.id, "Задачи обновлены")
 
 
 @bot.message_handler(content_types=['text', '/reg'])
