@@ -41,7 +41,7 @@ def update_hw(message):
                             bot.send_message(message.chat.id, c)
                         bot.send_message(message.chat.id, 'данное дз уже в базе')
                         break
-                    except FileNotFoundError:
+                    except github.GithubException.UnknownObjectException:
                         check = 1
         if check == 1:
             for i in range(len(task_links)):
