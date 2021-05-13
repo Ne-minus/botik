@@ -35,7 +35,6 @@ def update_hw(message):
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
                     path = os.path.join('botik/tests', hw)
-                    bot.send_message(message.chat.id, path)
                     try:
                         contents = repo.get_contents(path)
                         for c in contents:
@@ -48,9 +47,10 @@ def update_hw(message):
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
-                path = os.path.join('botik/tests', hw)
+                path = os.path.join('tests', hw)
                 filename = str(hw) + '_' + str(i+1) + '.txt'
                 path = os.path.join(path, str(filename))
+                bot.send_message(message.chat.id, path)
                 repo.create_file(path, "upload", task)
             bot.send_message(message.chat.id, "Задачи обновлены")
 
