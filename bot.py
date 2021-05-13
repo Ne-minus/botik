@@ -45,7 +45,8 @@ def update_hw(message):
                         check = 1
         if check == 1:
             contents = repo.get_contents("")
-            bot.send_message(message.chat.id, contents)
+            for el in contents:
+                bot.send_message(message.chat.id, el)
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
