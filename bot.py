@@ -47,7 +47,7 @@ def update_hw(message):
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
-                path = os.path.join('tests', hw)
+                path = os.path.join('/tests', hw)
                 filename = str(hw) + '_' + str(i+1) + '.txt'
                 path = os.path.join(path, str(filename))
                 repo.create_file(path=path, message="upload", content=task)
