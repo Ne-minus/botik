@@ -11,8 +11,7 @@ bot = telebot.TeleBot(TOKEN)
 username = input('введите логин гитхаб: ')
 password = input('введите пароль гитхаб: ')
 g = Github(username, password)
-path = os.path.join(username, 'botik')
-repo = g.get_repo(path)
+repo = g.get_repo('Ne-minus/botik')
 
 
 
