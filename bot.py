@@ -50,8 +50,7 @@ def update_hw(message):
                 path = os.path.join('tests', hw)
                 filename = str(hw) + '_' + str(i+1) + '.txt'
                 path = os.path.join(path, str(filename))
-                bot.send_message(message.chat.id, path)
-                repo.create_file(path, "upload", task)
+                repo.create_file(path=path, message="upload", content=task)
             bot.send_message(message.chat.id, "Задачи обновлены")
 
 
