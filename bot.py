@@ -34,7 +34,7 @@ def update_hw(message):
                         task_links.append('https://gist.githubusercontent.com'+n)
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
-                    path = os.path.join('botik/tests', hw)
+                    path = os.path.join('/botik/tests', hw)
                     try:
                         contents = repo.get_contents(path)
                         for c in contents:
@@ -47,7 +47,7 @@ def update_hw(message):
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
-                path = os.path.join('tests', hw)
+                path = os.path.join('/botik/tests', hw)
                 filename = str(hw) + '_' + str(i+1) + '.txt'
                 path = os.path.join(path, str(filename))
                 repo.create_file(path, "upload", task)
