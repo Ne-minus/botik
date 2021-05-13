@@ -8,7 +8,9 @@ from github import Github
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
-g = Github(input('введите логин гитхаб: '), input('введите пароль гитхаб: '))
+username = input('введите логин гитхаб: ')
+password = input('введите пароль гитхаб: ')
+g = Github(input(username, password)
 repo = g.get_user().get_repo("botik")
 
 
