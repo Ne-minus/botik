@@ -44,13 +44,15 @@ def update_hw(message):
                     except github.GithubException:
                         check = 1
         if check == 1:
+            contents = repo.get_contents("")
+            bot.send_message(message.chat.id, contents)
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
                 path = os.path.join('/botik/tests', hw)
                 filename = str(hw) + '_' + str(i+1) + '.txt'
                 path = os.path.join(path, str(filename))
-                repo.create_file(path=path, message="upload", content=task)
+                repo.create_file(path, "upload", task)
             bot.send_message(message.chat.id, "Задачи обновлены")
 
 
