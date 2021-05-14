@@ -1,8 +1,8 @@
 Welcome to FindTask Bot!!!
 
 This will be helpful if you want to:
- • upload tasks to GitHub
- • find particular task
+  • upload tasks to GitHub
+  • find particular task
  
 Our bot reacts on 'задач' in the message. 
 It is also possible to add a bot to a group chat: FindTask reads all messages and reacts if there is 'задач'.
