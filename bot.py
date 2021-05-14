@@ -13,14 +13,14 @@ g = Github(git_token)
 repo = g.get_repo('Ne-minus/botik')
 
 
-@bot.message_handler(func=lambda message: message.forward_from is not None)
+@bot.message_handler(func=lambda message: message.forward_from is not None)  # getting a message forwarded from semicode
 def update_hw(message):
     if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
-        for entity in message.entities:
+        for entity in message.entities:  # getting a homework link from the message
             if entity.type == 'text_link':
                 rep_link = entity.url
                 break
-        with urllib.request.urlopen(rep_link) as r:
+        with urllib.request.urlopen(rep_link) as r:  # fishing for task links and homework number
             task_links = []
             pattern_task_link = r'(?<=<a href=")/[A-Za-z]+/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
             pattern_hw = r'(?<=[HWhw-])+[0-9]+'
@@ -33,13 +33,13 @@ def update_hw(message):
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
                     path = os.path.join('tests', hw)
-                    try:
+                    try:  # check if the homework already exists
                         contents = repo.get_contents(path)
                         bot.send_message(message.chat.id, 'данное дз уже в базе')
                         break
                     except github.GithubException:
                         check = 1
-        if check == 1:
+        if check == 1:  # upload tasks to github repo
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
@@ -85,7 +85,6 @@ def get_task(message): #getting the task number
         with open(path, encoding='utf-8') as f:
             bot.send_message(message.chat.id, text=f.read())
     except FileNotFoundError:
-        #bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
         question = 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?'
         keyboard = types.InlineKeyboardMarkup()
         key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
