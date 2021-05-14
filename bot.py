@@ -23,12 +23,12 @@ def update_hw(message):
                 break
         with urllib.request.urlopen(rep_link) as r:
             task_links = []
-            pattern_task_link = r'(?<=<a href=")/Pandaklez/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
+            pattern_task_link = r'(?<=<a href=")/(Pandaklez|oserikov|Sapunov|lilaspourpre)/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
             pattern_hw = r'(?<=[HWhw-])+[0-9]+'
             check = 0
             for line in r:
                 decoded = line.decode('utf-8')
-                if '<a href="/Pandaklez' in decoded and '/raw/' in decoded:
+                if ('<a href="/Pandaklez' in decoded or '<a href="/oserikov' in decoded or '<a href="/Sapunov' in decoded or '<a href="/lilaspourpre' in decoded) and '/raw/' in decoded:
                     for n in re.findall(pattern_task_link, decoded):
                         task_links.append('https://gist.githubusercontent.com'+n)
                 elif '<title>' in decoded:
