@@ -47,13 +47,14 @@ def update_hw(message):
                 filename = str(hw) + '_' + str(i+1) + '.txt'
                 path = os.path.join(path, str(filename))
                 repo.create_file(path, 'upload', task)
+                os.system('git pull') 
             bot.send_message(message.chat.id, "Задачи обновлены")
 
 
 @bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
-        question = "Вам нужна помощь с поиском задачи?"
+        question = "Тебе нужна помощь с поиском задачи?"
         keyboard = types.InlineKeyboardMarkup() #наша клавиатура
         key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
         keyboard.add(key_yes) #добавляем кнопку в клавиатуру
@@ -94,7 +95,7 @@ def get_task(message):
         keyboard = types.InlineKeyboardMarkup() #наша клавиатура
         key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
         keyboard.add(key_yes) #добавляем кнопку в клавиатуру
-        key_yes = types.InlineKeyboardButton(text='No', callback_data='no') #кнопка «Да»
+        key_yes = types.InlineKeyboardButton(text='Нет', callback_data='no') #кнопка «Да»
         keyboard.add(key_yes) #добавляем кнопку в клавиатуру
         bot.send_message(message.chat.id, text='Не могу найти задачу. Попробуем заново?', reply_markup=keyboard)
 def stopper(call):
