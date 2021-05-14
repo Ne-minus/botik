@@ -8,9 +8,8 @@ from github import Github
 
 TOKEN = input("Введите токен:")  # '1663223369:AAH-yDDUkiJG33lUV5ZmHwsKg5uvHw3ISzM'
 bot = telebot.TeleBot(TOKEN)
-username = input('введите логин гитхаб: ')
-password = input('введите пароль гитхаб: ')
-g = Github(username, password)
+git_token = input('введите токен  гитхаб: ')
+g = Github(git_token)
 repo = g.get_repo('Ne-minus/botik')
 
 
@@ -47,8 +46,10 @@ def update_hw(message):
             for i in range(len(task_links)):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
+                path = os.path.join('/tests', hw)
                 filename = str(hw) + '_' + str(i+1) + '.txt'
-                repo.create_file(filename, 'upload', task)
+                path = os.path.join(path, str(filename))
+                repo.create_file(path, 'upload', task)
             bot.send_message(message.chat.id, "Задачи обновлены")
 
 
