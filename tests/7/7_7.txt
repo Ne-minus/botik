@@ -1,0 +1,6 @@
+5.
+
+Напишите функцию котороя будет принимать на вход имя файла и возвращать среднюю длину слова в этом файле. 
+Удалить пунктуацию (кроме "-") при помощи `.strip()`, считать, что слова разделены пробельными символами.
+
+В какой из песен ([`suncircle.txt`](https://gist.githubusercontent.com/lilaspourpre/285959acc2a6ab0e0613e3bd6cf0b54f/raw/38338dc1ea9cad15bf76dc1fdc404453c4adf2b6/suncircle.txt) или [`let_it_be.txt`](https://gist.githubusercontent.com/lilaspourpre/285959acc2a6ab0e0613e3bd6cf0b54f/raw/38338dc1ea9cad15bf76dc1fdc404453c4adf2b6/let_it_be.txt)) слова в среднем длиннее? Напишите в комментарии.
