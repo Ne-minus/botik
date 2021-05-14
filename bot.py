@@ -13,7 +13,6 @@ g = Github(git_token)
 repo = g.get_repo('Ne-minus/botik')
 
 
-
 @bot.message_handler(func=lambda message: message.forward_from is not None)
 def update_hw(message):
     if 'Все задачи по' in message.text and message.forward_from.username == 'semicodebot':
@@ -90,8 +89,18 @@ def get_task(message):
         with open(path, encoding='utf-8') as f:
             bot.send_message(message.chat.id, text=f.read())
     except FileNotFoundError:
-        bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
-        bot.register_next_step_handler(message, get_homework)
-
-
+        #bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
+        question = 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?'
+        keyboard = types.InlineKeyboardMarkup() #наша клавиатура
+        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
+        keyboard.add(key_yes) #добавляем кнопку в клавиатуру
+        key_yes = types.InlineKeyboardButton(text='No', callback_data='no') #кнопка «Да»
+        keyboard.add(key_yes) #добавляем кнопку в клавиатуру
+        bot.send_message(message.chat.id, text='Не могу найти задачу. Попробуем заново?', reply_markup=keyboard)
+def stopper(call):
+    if call.data == 'yes':
+        bot.send_message(call.message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
+        bot.register_next_step_handler(call.message, get_homework)
+    elif call.data == 'no':
+        return
 bot.polling()
