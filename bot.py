@@ -1,6 +1,5 @@
 import os
 import telebot
-#from telebot import types
 import re
 import urllib.request
 import github
@@ -27,9 +26,10 @@ def update_hw(message):
             check = 0
             for line in r:
                 decoded = line.decode('utf-8')
-                if ('<a href="/Pandaklez' in decoded or '<a href="/oserikov' in decoded or '<a href="/Sapunov' in decoded or '<a href="/lilaspourpre' in decoded) and '/raw/' in decoded:
+                if (
+                        '<a href="/Pandaklez' in decoded or '<a href="/oserikov' in decoded or '<a href="/Sapunov' in decoded or '<a href="/lilaspourpre' in decoded) and '/raw/' in decoded:
                     for n in re.findall(pattern_task_link, decoded):
-                        task_links.append('https://gist.githubusercontent.com'+n)
+                        task_links.append('https://gist.githubusercontent.com' + n)
                 elif '<title>' in decoded:
                     hw = re.findall(pattern_hw, decoded)[0]
                     path = os.path.join('tests', hw)
@@ -44,10 +44,10 @@ def update_hw(message):
                 with urllib.request.urlopen(task_links[i]) as t:
                     task = t.read()
                 path = os.path.join('tests', hw)
-                filename = str(hw) + '_' + str(i+1) + '.txt'
+                filename = str(hw) + '_' + str(i + 1) + '.txt'
                 path = os.path.join(path, str(filename))
                 repo.create_file(path, 'upload', task)
-                os.system('git pull') 
+                os.system('git pull')
             bot.send_message(message.chat.id, "Задачи обновлены")
 
 
@@ -55,28 +55,28 @@ def update_hw(message):
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
         question = "Тебе нужна помощь с поиском задачи?"
-        keyboard = telebot.types.InlineKeyboardMarkup() #creating a  keyboard
-        key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes') #button «Да»
-        keyboard.add(key_yes) #adding a button to the keyboard
+        keyboard = telebot.types.InlineKeyboardMarkup()  # creating a  keyboard
+        key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes')  # button «Да»
+        keyboard.add(key_yes)  # adding a button to the keyboard
         bot.send_message(message.chat.id, text=question, reply_markup=keyboard)
-        #bot.register_next_step_handler(message, callback_worker)
+        # bot.register_next_step_handler(message, callback_worker)
 
 
-@bot.callback_query_handler(func=lambda call: True)        
+@bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     if call.data == "yes":
         bot.send_message(call.message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
         bot.register_next_step_handler(call.message, get_homework)
-    
 
-def get_homework(message):  #getting the homework number
+
+def get_homework(message):  # getting the homework number
     global homework
     homework = message.text
     bot.send_message(message.chat.id, 'Отправь мне номер задачи, и все будет сделано))')
     bot.register_next_step_handler(message, get_task)
 
 
-def get_task(message): #getting the task number
+def get_task(message):  # getting the task number
     task = message.text
     filename = str(homework) + '_' + str(task) + '.txt'
     path = os.path.join('/home/hseguest/botik/tests', str(homework))
@@ -85,8 +85,7 @@ def get_task(message): #getting the task number
         with open(path, encoding='utf-8') as f:
             bot.send_message(message.chat.id, text=f.read())
     except FileNotFoundError:
-        question = 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?'
-        keyboard =telebot. types.InlineKeyboardMarkup()
+        keyboard = telebot.types.InlineKeyboardMarkup()
         key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes')
         keyboard.add(key_yes)
         key_yes = telebot.types.InlineKeyboardButton(text='Нет', callback_data='no')
@@ -94,7 +93,7 @@ def get_task(message): #getting the task number
         bot.send_message(message.chat.id, text='Не могу найти задачу. Попробуем заново?', reply_markup=keyboard)
 
 
-def stopper(call): #to stop working with the bot
+def stopper(call):  # to stop working with the bot
     if call.data == 'yes':
         bot.send_message(call.message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
         bot.register_next_step_handler(call.message, get_homework)
@@ -102,5 +101,5 @@ def stopper(call): #to stop working with the bot
         return
 
 
-
 bot.polling()
+
