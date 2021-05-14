@@ -1,0 +1,12 @@
+# Задача 6.
+
+Дан [`json`](https://raw.githubusercontent.com/google-research-datasets/dstc8-schema-guided-dialogue/master/test/dialogues_001.json) беседы с ботом. 
+Превратите его в беседу в `csv` с колонками `dialogue_id`, `utterance`, `response` где пары `utterance`, `response` собраны из пар <запрос пользователя `USER`, последовавший ответ системы `SYSTEM`> 
+
+Например, начинаться таблица будет с
+```csv
+dialogue_id,utterance,response
+1_000,"Hi, could you get me a restaurant booking on the 8th please?","Any preference on the restaurant, location and time?"
+```
+
+**Примечание:** обратите внимание на то, что текст реплик наверняка содержит запятые. Проследите за тем, чтобы модуль `csv` при записи в файл обернул реплики в кавычки.
