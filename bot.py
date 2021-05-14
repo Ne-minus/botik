@@ -55,9 +55,9 @@ def update_hw(message):
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
         question = "Тебе нужна помощь с поиском задачи?"
-        keyboard = types.InlineKeyboardMarkup() #наша клавиатура
-        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
-        keyboard.add(key_yes) #добавляем кнопку в клавиатуру
+        keyboard = types.InlineKeyboardMarkup() #creating a  keyboard
+        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #button «Да»
+        keyboard.add(key_yes) #adding a button to the keyboard
         bot.send_message(message.chat.id, text=question, reply_markup=keyboard)
         #bot.register_next_step_handler(message, callback_worker)
 
@@ -68,20 +68,15 @@ def callback_worker(call):
         bot.send_message(call.message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
         bot.register_next_step_handler(call.message, get_homework)
     
-            
-#def start(message):
- #   print(1337)
- #   bot.send_message(message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
-#  bot.register_next_step_handler(call.message, get_homework)
 
-
-def get_homework(message):  # получаем номер домашки
+def get_homework(message):  #getting the homework number
     global homework
     homework = message.text
     bot.send_message(message.chat.id, 'Отправь мне номер задачи, и все будет сделано))')
     bot.register_next_step_handler(message, get_task)
 
-def get_task(message):
+
+def get_task(message): #getting the task number
     task = message.text
     filename = str(homework) + '_' + str(task) + '.txt'
     path = os.path.join('/home/hseguest/botik/tests', str(homework))
@@ -92,16 +87,20 @@ def get_task(message):
     except FileNotFoundError:
         #bot.send_message(message.chat.id, 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?')
         question = 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?'
-        keyboard = types.InlineKeyboardMarkup() #наша клавиатура
-        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #кнопка «Да»
-        keyboard.add(key_yes) #добавляем кнопку в клавиатуру
-        key_yes = types.InlineKeyboardButton(text='Нет', callback_data='no') #кнопка «Да»
-        keyboard.add(key_yes) #добавляем кнопку в клавиатуру
+        keyboard = types.InlineKeyboardMarkup()
+        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
+        keyboard.add(key_yes)
+        key_yes = types.InlineKeyboardButton(text='Нет', callback_data='no')
+        keyboard.add(key_yes)
         bot.send_message(message.chat.id, text='Не могу найти задачу. Попробуем заново?', reply_markup=keyboard)
-def stopper(call):
+
+
+def stopper(call): #to stop working with the bot
     if call.data == 'yes':
         bot.send_message(call.message.chat.id, "Задачу из какой домашки ты хочешь увидеть?")
         bot.register_next_step_handler(call.message, get_homework)
     elif call.data == 'no':
         return
+
+
 bot.polling()
