@@ -50,7 +50,7 @@ def update_hw(message):
                 repo.create_file(path, 'upload', task)
             bot.send_message(message.chat.id, "Задачи обновлены")
 
-#s
+
 @bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
