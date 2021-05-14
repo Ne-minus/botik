@@ -36,8 +36,6 @@ def update_hw(message):
                     path = os.path.join('tests', hw)
                     try:
                         contents = repo.get_contents(path)
-                        for c in contents:
-                            bot.send_message(message.chat.id, c)
                         bot.send_message(message.chat.id, 'данное дз уже в базе')
                         break
                     except github.GithubException:
