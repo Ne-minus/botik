@@ -23,7 +23,7 @@ def update_hw(message):
                 break
         with urllib.request.urlopen(rep_link) as r:
             task_links = []
-            pattern_task_link = r'(?<=<a href=")/(Pandaklez|oserikov|Sapunov|lilaspourpre)/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
+            pattern_task_link = r'(?<=<a href=")/[A-Za-z]+/[0-9a-z]+/raw/[0-9a-z]+/[0-9]+[.]{1}md(?=")'  # регуляр_очка
             pattern_hw = r'(?<=[HWhw-])+[0-9]+'
             check = 0
             for line in r:
