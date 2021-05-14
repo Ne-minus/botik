@@ -1,6 +1,6 @@
 import os
 import telebot
-from telebot import types
+#from telebot import types
 import re
 import urllib.request
 import github
@@ -55,8 +55,8 @@ def update_hw(message):
 def asker(message):
     if 'задач' in message.text and 'Все задачи по' not in message.text:
         question = "Тебе нужна помощь с поиском задачи?"
-        keyboard = types.InlineKeyboardMarkup() #creating a  keyboard
-        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes') #button «Да»
+        keyboard = telebot.types.InlineKeyboardMarkup() #creating a  keyboard
+        key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes') #button «Да»
         keyboard.add(key_yes) #adding a button to the keyboard
         bot.send_message(message.chat.id, text=question, reply_markup=keyboard)
         #bot.register_next_step_handler(message, callback_worker)
@@ -86,10 +86,10 @@ def get_task(message): #getting the task number
             bot.send_message(message.chat.id, text=f.read())
     except FileNotFoundError:
         question = 'Не могу найти задачу. Попробуем заново, задачу из какой домашки ты хочешь увидеть?'
-        keyboard = types.InlineKeyboardMarkup()
-        key_yes = types.InlineKeyboardButton(text='Да', callback_data='yes')
+        keyboard =telebot. types.InlineKeyboardMarkup()
+        key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes')
         keyboard.add(key_yes)
-        key_yes = types.InlineKeyboardButton(text='Нет', callback_data='no')
+        key_yes = telebot.types.InlineKeyboardButton(text='Нет', callback_data='no')
         keyboard.add(key_yes)
         bot.send_message(message.chat.id, text='Не могу найти задачу. Попробуем заново?', reply_markup=keyboard)
 
