@@ -1,4 +1,0 @@
-# Задача №6
-Установите модуль [`pyfiglet`](https://github.com/pwaller/pyfiglet) и напишите программу, 
-которая будет рисовать `ASCII`-артом имя случайного [супергероя](https://gist.github.com/oserikov/c756640d7d0317a4673540b2ac260bc1#file-superheroes-csv) 
-из файла про супергероев.
