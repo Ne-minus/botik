@@ -52,8 +52,8 @@ def update_hw(message):
 
 @bot.message_handler(content_types=['text', '/reg'])
 def asker(message):
-    if 'задач' in message.text and 'Все задачи по' not in message.text:
-        question = "Тебе нужна помощь с поиском задачи?"
+    if ('задач' in message.text or '/start' in message.text) and 'Все задачи по' not in message.text:
+        question = "Тебе нужна помощь с поиском задачи? Если нет, то проигнорируй это сообщение"
         keyboard = telebot.types.InlineKeyboardMarkup()  # creating a  keyboard
         key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='yes')  # button «Да»
         keyboard.add(key_yes)  # adding a button to the keyboard
